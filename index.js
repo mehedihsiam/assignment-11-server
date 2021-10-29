@@ -28,7 +28,7 @@ async function run() {
         const database = client.db("travelBees");
         const reviewCollection = database.collection("reviews");
         const blogCollection = database.collection("blogs");
-
+        const packageCollection = database.collection("packages");
 
         app.get('/reviews', async (req, res) => {
             const cursor = reviewCollection.find({});
@@ -40,6 +40,12 @@ async function run() {
             const blogs = await cursor.toArray();
             res.send(blogs);
         });
+
+        app.get('/packages', async (req, res) => {
+            const cursor = packageCollection.find({});
+            const packages = await cursor.toArray();
+            res.send(packages);
+        })
     }
     finally {
         // await client.close();
