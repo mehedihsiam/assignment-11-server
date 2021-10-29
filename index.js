@@ -23,6 +23,23 @@ async function run() {
     try {
         await client.connect();
         console.log('DB Connected');
+
+
+        const database = client.db("travelBees");
+        const reviewCollection = database.collection("reviews");
+        const blogCollection = database.collection("blogs");
+
+
+        app.get('/reviews', async (req, res) => {
+            const cursor = reviewCollection.find({});
+            const reviews = await cursor.toArray();
+            res.send(reviews);
+        });
+        app.get('/blogs', async (req, res) => {
+            const cursor = blogCollection.find({});
+            const blogs = await cursor.toArray();
+            res.send(blogs);
+        });
     }
     finally {
         // await client.close();
