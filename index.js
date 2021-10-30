@@ -63,6 +63,13 @@ async function run() {
             res.json(result);
         });
 
+        app.delete('/packages/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) }
+            const result = await packageCollection.deleteOne(query)
+            res.json(result)
+        })
+
 
         // load package details at booking page
         app.get('/booking/:id', async (req, res) => {
