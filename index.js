@@ -44,9 +44,15 @@ async function run() {
         });
 
         app.get('/packages', async (req, res) => {
-            const cursor = packageCollection.find({});
+            const cursor = packageCollection.find({}).sort({ _id: -1 });
             const packages = await cursor.toArray();
             res.send(packages);
+        });
+        app.post('/packages', async (req, res) => {
+            const package = req.body;
+            const result = await packageCollection.insertOne(package);
+            // console.log(result);
+            res.json(result);
         });
         app.get('/booking/:id', async (req, res) => {
             const id = req.params.id;
@@ -57,6 +63,7 @@ async function run() {
         app.post('/orders', async (req, res) => {
             const order = req.body;
             const result = await orderCollection.insertOne(order)
+            // console.log(result);
             res.json(result);
         });
         app.get('/orders', async (req, res) => {
