@@ -30,6 +30,7 @@ async function run() {
         const reviewCollection = database.collection("reviews");
         const blogCollection = database.collection("blogs");
         const packageCollection = database.collection("packages");
+        const orderCollection = database.collection("orders");
 
         app.get('/reviews', async (req, res) => {
             const cursor = reviewCollection.find({});
@@ -52,6 +53,11 @@ async function run() {
             const query = { _id: ObjectId(id) }
             const package = await packageCollection.findOne(query)
             res.send(package);
+        });
+        app.post('/orders', async (req, res) => {
+            const order = req.body;
+            const result = await orderCollection.insertOne(order)
+            res.json(result);
         })
     }
     finally {
